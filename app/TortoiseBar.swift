@@ -103,11 +103,16 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         if let button = statusItem.button {
             let symbol = active ? "tortoise.fill" : "tortoise"
             let img = NSImage(systemSymbolName: symbol, accessibilityDescription: "Tortoise")
-            img?.isTemplate = !active
+            // Pure template so the glyph adapts to the menu bar like every other app's icon
+            // (white on a dark bar, black on a light one). Never set contentTintColor — it opts
+            // the button out of that adaptive tint and renders ~black under the bar's vibrancy.
+            img?.isTemplate = true
             button.image = img
             button.imagePosition = .imageLeading
             button.title = active ? " \(entries.count)" : ""
-            button.contentTintColor = active ? NSColor.systemRed : nil
+            button.contentTintColor = nil
+            // Active = full-strength (white on a dark bar) + count; idle = dimmed to a subtle grey.
+            button.alphaValue = active ? 1.0 : 0.55
             button.toolTip = active
                 ? "Tortoise — slowing \(entries.count) site\(entries.count == 1 ? "" : "s")"
                 : "Tortoise — off (network is normal)"
