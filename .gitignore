@@ -1,0 +1,12 @@
+# macOS
+.DS_Store
+
+# build artifacts (also covered by app/.gitignore)
+app/Tortoise.app/
+app/Tortoise.dmg
+app/Tortoise
+app/Tortoise.arm64
+app/Tortoise.x86_64
+app/make-icon
+app/AppIcon.icns
+app/AppIcon.iconset/

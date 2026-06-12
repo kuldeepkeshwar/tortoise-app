@@ -1,0 +1,9 @@
+# build artifacts — produced by build.sh / package-dmg.sh
+Tortoise.app/
+Tortoise
+Tortoise.dmg
+Tortoise.arm64
+Tortoise.x86_64
+make-icon
+AppIcon.icns
+AppIcon.iconset/
