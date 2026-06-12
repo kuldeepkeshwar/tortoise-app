@@ -12,10 +12,10 @@
 #
 # macOS only. Uses the built-in dnctl (dummynet) + pfctl. Nothing to install.
 #
-#   sudo ./tortoise.sh on conference-wifi app.prophecy.io
+#   sudo ./tortoise.sh on conference-wifi example.com
 #   ./tortoise.sh list           # what's being controlled right now
 #   ./tortoise.sh presets        # what presets exist
-#   sudo ./tortoise.sh off app.prophecy.io     # one domain
+#   sudo ./tortoise.sh off example.com     # one domain
 #   sudo ./tortoise.sh off all                 # everything
 #
 set -euo pipefail
@@ -32,7 +32,7 @@ PRESETS_FILE="${TORTOISE_PRESETS:-$HOME/.config/tortoise/presets.conf}"
 
 # ---- presets --------------------------------------------------------------------------
 # Values are PER DIRECTION (applied to both up and down), so round-trip latency ~= 2*delay
-# and packet loss compounds across the round trip. Tuned to the Summit ask:
+# and packet loss compounds across the round trip. Tuned to common real-world conditions:
 # packet loss 5-10%, latency 200-500ms RTT, bandwidth throttling.
 #
 #   name              bw           delay(ms)  plr (per-direction loss)
@@ -260,7 +260,7 @@ cmd_doctor() {
     local live; live="$(resolve_ips "$host" | xargs)"
     if [ "$live" != "$(echo "$ips" | xargs)" ]; then
       echo "    ⚠ DNS now resolves to: $live"
-      echo "      (CDN IPs rotated — re-run 'on' to re-shape. app.prophecy.io is behind CloudFront.)"
+      echo "      (CDN IPs rotated — re-run 'on' to re-shape. CDN-fronted sites rotate edge IPs.)"
     fi
   done
   if [ "${EUID:-$(id -u)}" -eq 0 ]; then
@@ -307,7 +307,7 @@ cmd_on() {
     || { cmd_presets; die "unknown preset '$preset' (and not a custom:<bw>:<delayMs>:<loss%> spec)."; }
   read -r bw delay plr <<<"$params"
   local label="$preset"; [[ "$preset" == custom:* ]] && label="custom"
-  [ "$#" -ge 1 ] || die "missing <url-or-domain>. e.g. sudo $0 on $preset app.prophecy.io"
+  [ "$#" -ge 1 ] || die "missing <url-or-domain>. e.g. sudo $0 on $preset example.com"
 
   require_root on "$preset" "$@"
   mkdir -p "$STATE_DIR"

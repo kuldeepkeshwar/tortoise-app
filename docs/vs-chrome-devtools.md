@@ -17,11 +17,10 @@ bandwidth), but they differ in ways that decide whether you actually reproduce r
 ## The one that matters most: packet loss
 
 DevTools can only make things **slow**, never **lossy**. But on conference wifi the thing that
-breaks the app isn't slowness — it's **lost packets** killing the live-editor websocket and
-Copilot streaming, triggering reconnects and stalls. With respect to loss, DevTools throttling
-is still a *perfect network* — which is exactly the gap that motivated this tool:
-
-> "Internal testing on perfect networks doesn't uncover the issues we are facing."
+breaks an app usually isn't slowness — it's **lost packets** killing long-lived websockets and
+streaming responses, triggering reconnects and stalls. With respect to loss, DevTools throttling
+is still a *perfect network* — which is exactly the gap that motivated this tool: testing on fast,
+lossless office/CI networks never reproduces what users hit in the wild.
 
 ## Where DevTools is actually better
 

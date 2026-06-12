@@ -11,7 +11,7 @@ cd "$(dirname "$0")"
 
 APP="Tortoise.app"
 EXEC="Tortoise"
-BUNDLE_ID="io.prophecy.tortoise"
+BUNDLE_ID="io.github.kuldeepkeshwar.tortoise"
 CLI="../tortoise.sh"
 README="../README.md"
 
