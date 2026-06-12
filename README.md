@@ -149,10 +149,18 @@ cd app
 # or build the .app directly:  ./build.sh /Applications
 ```
 
-Open `Tortoise.dmg`, drag **Tortoise** into Applications, launch it. It's ad-hoc signed (not
-notarized), so the first open may need a right-click → **Open** (or **System Settings → Privacy &
-Security → Open Anyway**). It compiles from `TortoiseBar.swift` with the Command Line Tools — no
-Xcode project, no dependencies — and embeds its own copy of `tortoise.sh`, so the `.app` is portable.
+Open `Tortoise.dmg`, drag **Tortoise** into Applications, launch it. It compiles from
+`TortoiseBar.swift` with the Command Line Tools — no Xcode project, no dependencies — and embeds
+its own copy of `tortoise.sh`, so the `.app` is portable.
+
+> **First launch of a downloaded build** is blocked by Gatekeeper — *"Apple could not verify
+> Tortoise.app is free of malware"* — because the app is ad-hoc signed, not notarized, and a
+> downloaded file carries a quarantine flag. (A locally-built copy isn't quarantined, so it opens
+> without this.) To open it, either:
+> - **System Settings → Privacy & Security → Open Anyway** (after the first blocked attempt), or
+> - strip the quarantine flag: `xattr -dr com.apple.quarantine /Applications/Tortoise.app`
+>
+> A fully friction-free download requires signing with an Apple Developer ID + notarization.
 
 **What you get:**
 - A 🐢 icon: **subtle when idle**, **red with a count when a site is being slowed**.
